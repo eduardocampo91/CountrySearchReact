@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/CountrySearchReact/static/css/main.722eafe8.css",
+    "main.js": "/CountrySearchReact/static/js/main.0a53dd63.js",
+    "static/js/453.62f49430.chunk.js": "/CountrySearchReact/static/js/453.62f49430.chunk.js",
+    "index.html": "/CountrySearchReact/index.html",
+    "main.722eafe8.css.map": "/CountrySearchReact/static/css/main.722eafe8.css.map",
+    "main.0a53dd63.js.map": "/CountrySearchReact/static/js/main.0a53dd63.js.map",
+    "453.62f49430.chunk.js.map": "/CountrySearchReact/static/js/453.62f49430.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.722eafe8.css",
+    "static/js/main.0a53dd63.js"
+  ]
+}
