@@ -12,6 +12,8 @@ import {
 import { useEffect, useState } from "react";
 import SearchBar from "../searchBar.tsx/searchBar";
 import DropdownFilter from "../dropdownFilter/dropdownFilter";
+import ModalCountryDetail from "../modalCountryDetails/modalCountryDetails";
+import { Button } from "react-bootstrap";
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
@@ -33,6 +35,8 @@ function CountriesList() {
   const [search, setSearch] = useState("");
   const [selectedCurrency, setSelectedCurrency] = useState("");
   const [selectedContinent, setSelectedContinent] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState<any>(null);
 
   useEffect(() => {
     const trimmed = search.trim();
@@ -79,6 +83,11 @@ function CountriesList() {
     new Set(allData?.countries.map((country: any) => country.continent.name))
   ) as any;
 
+  const handleCountryClick = (country: any) => {
+    setSelectedCountry(country);
+    setShowModal(true);
+  };
+
   return (
     <div className="container p-4">
       <h2 className="h3 mb-3">Countries</h2>
@@ -112,8 +121,13 @@ function CountriesList() {
         {paginatedCountries.length ? (
           paginatedCountries.map((country: any) => (
             <li key={country.code} className="mb-2">
-              <strong>{country.name}</strong> ({country.code}) -{" "}
-              {country.continent.name} - {country.currency}
+              <Button
+                variant="outline-dark"
+                onClick={() => handleCountryClick(country)}
+              >
+                <strong>{country.name}</strong> ({country.code}) -{" "}
+                {country.continent.name} - {country.currency}
+              </Button>
             </li>
           ))
         ) : (
@@ -141,6 +155,14 @@ function CountriesList() {
             Next
           </button>
         </div>
+      )}
+
+      {selectedCountry && (
+        <ModalCountryDetail
+          show={showModal}
+          country={selectedCountry}
+          onHide={() => setShowModal(false)}
+        />
       )}
     </div>
   );
