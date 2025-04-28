@@ -24,7 +24,7 @@ function ModalCountryDetail({ show, country, onHide }: Props) {
           </Modal.Body>
     
           <Modal.Footer>
-            <Button variant="secondary" onClick={onHide}>
+            <Button data-testid="footer-close-btn" variant="secondary" onClick={onHide}>
               Close
             </Button>
           </Modal.Footer>
