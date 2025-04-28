@@ -37,4 +37,4 @@ export const SEARCH_COUNTRY_BY_NAME = gql`
 
 //General const
 
-export const ITEMS_PER_PAGE = 25;
+export const ITEMS_PER_PAGE = 15;
