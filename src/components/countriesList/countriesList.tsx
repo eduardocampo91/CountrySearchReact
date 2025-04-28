@@ -11,6 +11,7 @@ import {
 } from "../assets/const";
 import { useEffect, useState } from "react";
 import SearchBar from "../searchBar.tsx/searchBar";
+import DropdownFilter from "../dropdownFilter/dropdownFilter";
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
@@ -30,6 +31,8 @@ function CountriesList() {
 
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
+  const [selectedCurrency, setSelectedCurrency] = useState("");
+  const [selectedContinent, setSelectedContinent] = useState("");
 
   useEffect(() => {
     const trimmed = search.trim();
@@ -49,13 +52,32 @@ function CountriesList() {
     ? searchData?.countries || []
     : allData?.countries || [];
 
+  const filteredCountries = countries.filter((country: any) => {
+    const matchesCurrency = selectedCurrency
+      ? country.currency === selectedCurrency
+      : true;
+    const matchesContinent = selectedContinent
+      ? country.continent.name === selectedContinent
+      : true;
+
+    return matchesCurrency && matchesContinent;
+  });
+
   const startIndex = (page - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
-  const totalPages = Math.ceil(countries.length / ITEMS_PER_PAGE);
+  const totalPages = Math.ceil(filteredCountries.length / ITEMS_PER_PAGE);
 
   const paginatedCountries = search
-    ? countries
-    : countries.slice(startIndex, endIndex);
+    ? filteredCountries
+    : filteredCountries.slice(startIndex, endIndex);
+
+  const allCurrencies = Array.from(
+    new Set(allData?.countries.map((country: any) => country.currency))
+  ) as any;
+
+  const allContinents = Array.from(
+    new Set(allData?.countries.map((country: any) => country.continent.name))
+  ) as any;
 
   return (
     <div className="p-4">
@@ -65,17 +87,33 @@ function CountriesList() {
         value={search}
         onChange={(value) => {
           setSearch(value);
-          setPage(1); // Reset page on new search
+          setPage(1);
         }}
         placeholder="Search countries..."
       ></SearchBar>
+
+      <div className="flex gap-4 mb-4">
+        <DropdownFilter
+          label="Filter by Currency"
+          value={selectedCurrency}
+          onChange={setSelectedCurrency}
+          options={allCurrencies}
+        />
+
+        <DropdownFilter
+          label="Filter by Continent"
+          value={selectedContinent}
+          onChange={setSelectedContinent}
+          options={allContinents}
+        />
+      </div>
 
       <ul className="list-disc pl-5">
         {paginatedCountries.length ? (
           paginatedCountries.map((country: any) => (
             <li key={country.code}>
               <strong>{country.name}</strong> ({country.code}) -{" "}
-              {country.continent.name}
+              {country.continent.name} - {country.currency}
             </li>
           ))
         ) : (
