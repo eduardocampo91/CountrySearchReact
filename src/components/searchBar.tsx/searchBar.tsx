@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 interface Props {
   value: string;
   onChange: (value: string) => void;
@@ -14,7 +12,7 @@ function SearchBar({ value, onChange, placeholder }: Props) {
         value={value}
         placeholder={placeholder || "Search..."}
         onChange={(e) => onChange(e.target.value)}
-        className="mb-4 px-3 py-2 border border-gray-300 rounded w-full"
+        className="form-control"
       />
     </>
   );

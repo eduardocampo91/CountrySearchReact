@@ -9,11 +9,11 @@ interface Props {
 function DropdownFilter({ options, value, onChange, label }: Props) {
     return (
         <div className="mb-4">
-          <label className="block text-sm font-semibold">{label}</label>
+          <label className="form-label">{label}</label>
           <select
             value={value}
             onChange={(e) => onChange(e.target.value)}
-            className="mt-2 p-2 border rounded"
+            className="form-select"
           >
             <option value="">All</option>
             {options.map((option) => (

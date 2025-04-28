@@ -80,8 +80,8 @@ function CountriesList() {
   ) as any;
 
   return (
-    <div className="p-4">
-      <h2 className="text-xl font-semibold mb-2">Countries</h2>
+    <div className="container p-4">
+      <h2 className="h3 mb-3">Countries</h2>
 
       <SearchBar
         value={search}
@@ -108,10 +108,10 @@ function CountriesList() {
         />
       </div>
 
-      <ul className="list-disc pl-5">
+      <ul className="list-[square] pl-4 space-y-2 text-teal-800">
         {paginatedCountries.length ? (
           paginatedCountries.map((country: any) => (
-            <li key={country.code}>
+            <li key={country.code} className="mb-2">
               <strong>{country.name}</strong> ({country.code}) -{" "}
               {country.continent.name} - {country.currency}
             </li>
@@ -126,7 +126,7 @@ function CountriesList() {
           <button
             onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
             disabled={page === 1}
-            className="px-3 py-1 bg-gray-300 rounded disabled:opacity-50"
+            className="btn btn-secondary disabled:opacity-50"
           >
             Previous
           </button>
@@ -136,7 +136,7 @@ function CountriesList() {
           <button
             onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
             disabled={page === totalPages}
-            className="px-3 py-1 bg-gray-300 rounded disabled:opacity-50"
+            className="btn btn-secondary disabled:opacity-50"
           >
             Next
           </button>
