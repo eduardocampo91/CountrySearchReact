@@ -34,8 +34,9 @@ function CountriesList() {
   useEffect(() => {
     const trimmed = search.trim();
     if (trimmed.length > 0) {
+      const capitalized = trimmed.charAt(0).toUpperCase() + trimmed.slice(1);
       fetchSearchedCountries({
-        variables: { regex: `^${trimmed}` },
+        variables: { regex: `^${capitalized}` },
       });
     }
   }, [search, fetchSearchedCountries]);
